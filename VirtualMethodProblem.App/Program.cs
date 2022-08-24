@@ -12,12 +12,12 @@ class Base
     
     public object Dependency { get; }
 
-    public Base(int state, object dependency)
+    public Base(int state, object dependency):this(dependency,state,state*2)
     {
-        this.State = state;
-        Dependency = dependency;
-        this.Calculated = this.Calculate(); // temporary fix. Wont be possible always. 
     }
+
+    protected Base(object dependency, int state, int calculated) =>
+        (Dependency, State, Calculated) = (dependency, state, calculated);
 
     protected virtual int Calculate() => 7;
 }
