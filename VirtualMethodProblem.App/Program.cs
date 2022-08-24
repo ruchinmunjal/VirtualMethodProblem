@@ -14,9 +14,9 @@ class Base
 
     public Base(int state, object dependency)
     {
-        this.Calculated = this.Calculate();
         this.State = state;
         Dependency = dependency;
+        this.Calculated = this.Calculate(); // temporary fix. Wont be possible always. 
     }
 
     protected virtual int Calculate() => 7;
