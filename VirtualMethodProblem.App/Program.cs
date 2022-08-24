@@ -1,4 +1,4 @@
-﻿Base a = new Base(3 , new ());
+﻿Base a = Base.Create(3 , new ());
 Derived d = new(4,new());
 
 Console.WriteLine($"base class state is {a.State} and calculate state is {a.Calculated}");
@@ -12,24 +12,15 @@ class Base
     
     public object Dependency { get; }
 
-    public Base(int state, object dependency):this(dependency,state,state*2)
-    {
-    }
+    public static Base Create(int state, object dependency) => new(dependency, state, state * 2);
 
     protected Base(object dependency, int state, int calculated) =>
         (Dependency, State, Calculated) = (dependency, state, calculated);
-
-    protected virtual int Calculate() => 7;
 }
 
 class Derived : Base
 {
-    public Derived(int state, object dependency) : base(state,dependency)
-    {
-        
-    }
-    //Below will fail because Dependency is still null as the value used is before initialization
-    protected override int Calculate() => this.Dependency.GetHashCode() % base.State * 2;
-    
+    public Derived(int state, object dependency) 
+        : base(dependency,state, dependency.GetHashCode() % state * 2) { }
 
 }
